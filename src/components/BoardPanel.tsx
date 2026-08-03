@@ -1,4 +1,5 @@
 import type { Board } from '../game/types';
+import type { Phase } from '../hooks/useBattleship';
 import { Board as GameBoard } from './Board';
 import { FleetStatus } from './FleetStatus';
 
@@ -10,7 +11,10 @@ type BoardPanelProps = {
   previewValid?: boolean;
   onCell?: Parameters<typeof GameBoard>[0]['onCell'];
   onHover?: Parameters<typeof GameBoard>[0]['onHover'];
+  onMouseLeave?: () => void;
+  onBlur?: () => void;
   shotsLabel: string;
+  phase: Phase;
 };
 
 export function BoardPanel({
@@ -21,7 +25,10 @@ export function BoardPanel({
   previewValid,
   onCell,
   onHover,
+  onMouseLeave,
+  onBlur,
   shotsLabel,
+  phase,
 }: BoardPanelProps) {
   return (
     <div className={`board-panel ${enemy ? 'enemy-panel' : ''}`}>
@@ -40,10 +47,18 @@ export function BoardPanel({
         previewValid={previewValid}
         onCell={onCell}
         onHover={onHover}
+        onMouseLeave={onMouseLeave}
+        onBlur={onBlur}
       />
       <FleetStatus board={board} label={enemy ? 'Enemy fleet' : 'Your fleet'} />
       <p className="helper">
-        {interactive ? 'Select a coordinate to fire.' : 'Waters are locked.'}
+        {enemy
+          ? interactive
+            ? 'Select a coordinate to fire.'
+            : 'Waters are locked.'
+          : phase === 'placement'
+            ? 'Select a coordinate to place your ship.'
+            : 'Your fleet is deployed. Waters are locked.'}
       </p>
     </div>
   );

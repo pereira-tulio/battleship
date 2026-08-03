@@ -40,6 +40,10 @@ export function Game() {
   const [hover, setHover] = useState<Coordinate | null>(null);
 
   useEffect(() => {
+    setHover(null);
+  }, [state.phase, state.player, state.selected, state.orientation]);
+
+  useEffect(() => {
     const onKey = (event: KeyboardEvent) => {
       if (event.key.toLowerCase() === 'r' && state.phase === 'placement') {
         rotate();
@@ -104,6 +108,9 @@ export function Game() {
           previewValid={previewValid}
           interactive={state.phase === 'placement'}
           onHover={setHover}
+          onMouseLeave={() => setHover(null)}
+          onBlur={() => setHover(null)}
+          phase={state.phase}
           onCell={(cell) => {
             setHover(cell);
             if (
@@ -123,6 +130,7 @@ export function Game() {
           enemy
           interactive={state.phase === 'playerTurn'}
           onCell={fire}
+          phase={state.phase}
           shotsLabel={`${Object.keys(state.enemy.shots).length} shots`}
         />
       </section>

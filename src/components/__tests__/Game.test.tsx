@@ -23,6 +23,56 @@ describe('game flow', () => {
     expect(screen.getByText(/your turn/i)).toBeInTheDocument();
   });
 
+  it('shows role-specific helper copy during placement', () => {
+    render(<Game />);
+    expect(
+      screen.getByText('Select a coordinate to place your ship.'),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Waters are locked.')).toBeInTheDocument();
+  });
+
+  it('updates both helper messages during the player turn', () => {
+    render(<Game />);
+    fireEvent.click(screen.getByRole('button', { name: /random placement/i }));
+    fireEvent.click(screen.getByRole('button', { name: /start mission/i }));
+    expect(
+      screen.getByText('Your fleet is deployed. Waters are locked.'),
+    ).toBeInTheDocument();
+    expect(screen.getByText('Select a coordinate to fire.')).toBeInTheDocument();
+  });
+
+  it('clears placement hover preview when leaving the board', () => {
+    render(<Game />);
+    const player = screen.getByRole('grid', { name: /your fleet/i });
+    const cell = player.querySelector<HTMLButtonElement>('[data-cell="0,0"]')!;
+    fireEvent.mouseEnter(cell);
+    expect(player.querySelectorAll('.cell-preview-valid')).not.toHaveLength(0);
+    fireEvent.mouseLeave(player);
+    expect(player.querySelectorAll('[class*="cell-preview-"]')).toHaveLength(0);
+  });
+
+  it('clears placement hover preview after random placement', () => {
+    render(<Game />);
+    const player = screen.getByRole('grid', { name: /your fleet/i });
+    fireEvent.mouseEnter(player.querySelector<HTMLButtonElement>('[data-cell="0,0"]')!);
+    expect(player.querySelectorAll('[class*="cell-preview-"]')).not.toHaveLength(0);
+    fireEvent.click(screen.getByRole('button', { name: /random placement/i }));
+    expect(player.querySelectorAll('[class*="cell-preview-"]')).toHaveLength(0);
+  });
+
+  it('marks every in-bounds cell of an out-of-bounds preview invalid', () => {
+    render(<Game />);
+    const player = screen.getByRole('grid', { name: /your fleet/i });
+    fireEvent.mouseEnter(player.querySelector<HTMLButtonElement>('[data-cell="0,8"]')!);
+    const invalid = player.querySelectorAll('.cell-preview-invalid');
+    expect(invalid).toHaveLength(2);
+    expect(
+      player
+        .querySelector('[data-cell="0,8"]')
+        ?.classList.contains('cell-preview-invalid'),
+    ).toBe(true);
+  });
+
   it('fires at an enemy cell and returns to the player turn', () => {
     vi.useFakeTimers();
     render(<Game />);

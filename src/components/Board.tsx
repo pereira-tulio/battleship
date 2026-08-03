@@ -18,6 +18,8 @@ type BoardProps = {
   previewValid?: boolean;
   onCell?: (cell: Coordinate) => void;
   onHover?: (cell: Coordinate) => void;
+  onMouseLeave?: () => void;
+  onBlur?: () => void;
 };
 
 function cellCoordinates(): Coordinate[] {
@@ -43,6 +45,8 @@ export function Board({
   previewValid = true,
   onCell,
   onHover,
+  onMouseLeave,
+  onBlur,
 }: BoardProps) {
   const cells = cellCoordinates();
 
@@ -58,6 +62,8 @@ export function Board({
         className="board"
         role="grid"
         aria-label={enemy ? 'Enemy waters' : 'Your fleet'}
+        onMouseLeave={onMouseLeave}
+        onBlur={onBlur}
       >
         {Array.from({ length: BOARD_SIZE }, (_, row) => (
           <div className="board-row" role="row" key={row}>
