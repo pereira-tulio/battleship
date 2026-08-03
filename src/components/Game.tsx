@@ -85,66 +85,71 @@ export function Game() {
       <GameHeader onNewGame={newGame} />
       <StatusBanner phase={state.phase} message={state.message} onNewGame={newGame} />
 
-      {state.phase === 'placement' && (
-        <PlacementPanel
-          selected={state.selected}
-          playerBoard={state.player}
-          orientation={state.orientation}
-          onRotate={rotate}
-          onRandomize={randomize}
-          onReset={resetPlacement}
-          onSelectShip={selectShip}
-        />
-      )}
+      <div
+        className={`game-content ${
+          state.phase === 'placement' ? 'placement-content' : ''
+        }`}
+      >
+        {state.phase === 'placement' && (
+          <PlacementPanel
+            selected={state.selected}
+            playerBoard={state.player}
+            orientation={state.orientation}
+            onRotate={rotate}
+            onRandomize={randomize}
+            onReset={resetPlacement}
+            onSelectShip={selectShip}
+          />
+        )}
 
-      <section className="boards">
-        <BoardPanel
-          board={state.player}
-          preview={state.phase === 'placement' ? preview : null}
-          previewValid={previewValid}
-          interactive={state.phase === 'placement'}
-          onHover={setHover}
-          onMouseLeave={() => setHover(null)}
-          onBlur={() => setHover(null)}
-          phase={state.phase}
-          onCell={(cell) => {
-            setHover(cell);
-            if (
-              selectedSpec &&
-              canPlaceShip(state.player, cell, selectedSpec.size, state.orientation)
-            ) {
-              place(cell);
-            }
-          }}
-          shotsLabel={`${state.player.ships.reduce(
-            (count, ship) => count + ship.hits.length,
-            0,
-          )} hits taken`}
-        />
-        <BoardPanel
-          board={state.enemy}
-          enemy
-          interactive={state.phase === 'playerTurn'}
-          onCell={fire}
-          phase={state.phase}
-          shotsLabel={`${Object.keys(state.enemy.shots).length} shots`}
-        />
-      </section>
+        <section className="boards">
+          <BoardPanel
+            board={state.player}
+            preview={state.phase === 'placement' ? preview : null}
+            previewValid={previewValid}
+            interactive={state.phase === 'placement'}
+            onHover={setHover}
+            onMouseLeave={() => setHover(null)}
+            onBlur={() => setHover(null)}
+            phase={state.phase}
+            onCell={(cell) => {
+              setHover(cell);
+              if (
+                selectedSpec &&
+                canPlaceShip(state.player, cell, selectedSpec.size, state.orientation)
+              ) {
+                place(cell);
+              }
+            }}
+            shotsLabel={`${state.player.ships.reduce(
+              (count, ship) => count + ship.hits.length,
+              0,
+            )} hits taken`}
+          />
+          <BoardPanel
+            board={state.enemy}
+            enemy
+            interactive={state.phase === 'playerTurn'}
+            onCell={fire}
+            phase={state.phase}
+            shotsLabel={`${Object.keys(state.enemy.shots).length} shots`}
+          />
+        </section>
 
-      <Legend />
+        <Legend />
 
-      {state.phase === 'placement' && (
-        <button
-          className="start-button"
-          disabled={state.player.ships.length !== FLEET.length}
-          onClick={start}
-        >
-          {state.player.ships.length === FLEET.length
-            ? 'Start mission'
-            : 'Deploy all ships to start'}
-          <span>→</span>
-        </button>
-      )}
+        {state.phase === 'placement' && (
+          <button
+            className="start-button"
+            disabled={state.player.ships.length !== FLEET.length}
+            onClick={start}
+          >
+            {state.player.ships.length === FLEET.length
+              ? 'Start mission'
+              : 'Deploy all ships to start'}
+          </button>
+        )}
+      </div>
     </main>
   );
 }

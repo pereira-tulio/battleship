@@ -41,7 +41,16 @@ export function PlacementPanel({
       </div>
       <div className="control-actions">
         <button className="button button-outline" onClick={onRotate}>
-          ↻ Rotate <kbd>R</kbd>
+          <svg
+            className="rotate-mark"
+            viewBox="0 0 20 20"
+            aria-hidden="true"
+            focusable="false"
+          >
+            <path d="M16 8a6 6 0 1 0 1 5" />
+            <path d="M16 3v5h-5" />
+          </svg>
+          Rotate <kbd>R</kbd>
         </button>
         <button className="button button-outline" onClick={onRandomize}>
           Random placement
