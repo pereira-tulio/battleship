@@ -18,9 +18,10 @@ export function Board({ board, enemy = false, disabled = false, preview, preview
       return <button key={key} type="button" role="gridcell" className={`cell cell-${status} ${previewCell ? `cell-preview ${previewValid ? 'cell-preview-valid' : 'cell-preview-invalid'}` : ''}`} disabled={disabled || Boolean(shot)} onMouseEnter={() => onHover?.(cell)} onFocus={() => onHover?.(cell)} onKeyDown={(event) => {
         const directions: Record<string, number> = { ArrowUp: -BOARD_SIZE, ArrowDown: BOARD_SIZE, ArrowLeft: -1, ArrowRight: 1 };
         const offset = directions[event.key];
-        if (offset) {
+        const canMove = (event.key === 'ArrowUp' && cell.row > 0) || (event.key === 'ArrowDown' && cell.row < BOARD_SIZE - 1) || (event.key === 'ArrowLeft' && cell.col > 0) || (event.key === 'ArrowRight' && cell.col < BOARD_SIZE - 1);
+        if (offset && canMove) {
           event.preventDefault();
-          const next = Math.max(0, Math.min(cells.length - 1, cells.indexOf(cell) + offset));
+          const next = cells.indexOf(cell) + offset;
           (event.currentTarget.parentElement?.children[next] as HTMLButtonElement | undefined)?.focus();
         }
       }} onClick={() => onCell?.(cell)} aria-label={`${letter(cell.col)}${cell.row + 1}, ${status === 'unknown' ? 'unexplored' : status}`}><span aria-hidden="true">{status === 'hit' || status === 'sunk' ? '✦' : status === 'miss' ? '•' : ''}</span></button>;
