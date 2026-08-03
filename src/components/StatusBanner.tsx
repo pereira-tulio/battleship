@@ -1,8 +1,12 @@
 import type { Phase } from '../hooks/useBattleship';
 
-type StatusBannerProps = { phase: Phase; message: string };
+type StatusBannerProps = {
+  phase: Phase;
+  message: string;
+  onNewGame?: () => void;
+};
 
-export function StatusBanner({ phase, message }: StatusBannerProps) {
+export function StatusBanner({ phase, message, onNewGame }: StatusBannerProps) {
   const title =
     phase === 'placement'
       ? 'Deployment'
@@ -10,18 +14,24 @@ export function StatusBanner({ phase, message }: StatusBannerProps) {
         ? 'Your move'
         : phase === 'aiTurn'
           ? 'Enemy move'
-          : 'Final score';
+          : message.includes('entire enemy fleet')
+            ? 'Victory'
+            : 'Defeat';
 
   return (
     <section className="hero">
       <div>
         <h2>{title}</h2>
-        <p className="subtitle">Mark the grid. Make the call. Hold the line.</p>
       </div>
       <div className="status" aria-live="polite">
         <span className={`status-dot status-${phase}`} />
         {message}
       </div>
+      {phase === 'gameOver' && onNewGame && (
+        <button className="button" onClick={onNewGame}>
+          Play again
+        </button>
+      )}
     </section>
   );
 }

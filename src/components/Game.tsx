@@ -73,21 +73,7 @@ export function Game() {
   return (
     <main className="shell">
       <GameHeader onNewGame={newGame} />
-      <StatusBanner phase={state.phase} message={state.message} />
-
-      {state.phase === 'gameOver' && (
-        <section className="winner" aria-live="polite">
-          <strong>{state.winner === 'player' ? 'VICTORY' : 'DEFEAT'}</strong>
-          <span>
-            {state.winner === 'player'
-              ? 'Your fleet commands the sea.'
-              : 'Regroup and return to the fight.'}
-          </span>
-          <button className="button" onClick={newGame}>
-            Play again
-          </button>
-        </section>
-      )}
+      <StatusBanner phase={state.phase} message={state.message} onNewGame={newGame} />
 
       {state.phase === 'placement' && (
         <PlacementPanel
