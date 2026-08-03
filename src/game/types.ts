@@ -2,7 +2,7 @@ export const BOARD_SIZE = 10;
 export type Orientation = 'horizontal' | 'vertical';
 export type Coordinate = { row: number; col: number };
 export type ShipName = 'Carrier' | 'Battleship' | 'Cruiser' | 'Submarine' | 'Destroyer';
-export type CellMark = 'unknown' | 'ship' | 'hit' | 'miss';
+export type CellMark = 'unknown' | 'ship' | 'hit' | 'miss' | 'sunk';
 export type ShotResult = 'hit' | 'miss' | 'sunk';
 export type RNG = () => number;
 
@@ -24,5 +24,9 @@ export const coordinateOf = (key: string): Coordinate => {
 export const isInside = ({ row, col }: Coordinate) =>
   row >= 0 && row < BOARD_SIZE && col >= 0 && col < BOARD_SIZE;
 export const neighbors = ({ row, col }: Coordinate): Coordinate[] =>
-  [{ row: row - 1, col }, { row: row + 1, col }, { row, col: col - 1 }, { row, col: col + 1 }]
-    .filter(isInside);
+  [
+    { row: row - 1, col },
+    { row: row + 1, col },
+    { row, col: col - 1 },
+    { row, col: col + 1 },
+  ].filter(isInside);
