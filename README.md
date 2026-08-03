@@ -1,38 +1,137 @@
 # Fleetline Battleship
 
-A polished, accessible Battleship SPA built with React, TypeScript, Vite, and plain CSS. The game is fully client-side: deploy a 5-ship fleet, then duel an adaptive computer opponent on a 10×10 grid.
+![Fleetline Battleship desktop screenshot](docs/screenshots/desktop.png)
 
-## Local setup
+Fleetline is a polished, accessible Battleship single-page application built with
+React, TypeScript, Vite, and plain CSS. It runs entirely in the browser: no
+backend, authentication, database, API key, or external service is required.
+
+## Features
+
+- 10×10 boards with the standard Carrier (5), Battleship (4), Cruiser (3),
+  Submarine (3), and Destroyer (2) fleet.
+- Manual horizontal/vertical placement with overlap and boundary validation.
+- Hover previews, keyboard `R` rotation, fleet selection, random placement,
+  and reset placement.
+- Deliberate AI opponent with hunt and target modes.
+- Clear hit, miss, sunk, current-turn, and winner states.
+- Responsive desktop layout that stacks cleanly on narrow screens.
+- Keyboard-friendly, labelled buttons, arrow-key board navigation, visible
+  coordinates, semantic grid rows, polite live status updates, and a legend.
+- Deterministic, injectable random number generation in pure game logic.
+
+## Quick start
+
+Requires Node.js 18 or newer.
 
 ```bash
 npm install
 npm run dev
 ```
 
-Quality commands:
+Open the local URL printed by Vite. The production build is static and can be
+served from any CDN.
 
-```bash
-npm run lint
-npm run typecheck
-npm test
-npm run build
+## Scripts
+
+| Command                | Purpose                                     |
+| ---------------------- | ------------------------------------------- |
+| `npm run dev`          | Start the Vite development server           |
+| `npm run build`        | Type-check and create the production bundle |
+| `npm run lint`         | Run ESLint                                  |
+| `npm run typecheck`    | Run TypeScript without emitting             |
+| `npm test`             | Run the non-watch Vitest suite              |
+| `npm run format`       | Format the repository with Prettier         |
+| `npm run format:check` | Verify repository formatting                |
+
+## Project structure
+
+```text
+src/
+├── game/                         # Pure, UI-free game rules
+│   ├── ai.ts                     # Hunt/target opponent strategy
+│   ├── board.ts                  # Board creation and placement
+│   ├── combat.ts                 # Firing, hit, sunk, win rules
+│   ├── fleet.ts                  # Fleet definitions
+│   └── types.ts                  # Shared domain types
+├── hooks/useBattleship.ts        # Reducer and delayed-turn orchestration
+├── components/                   # Presentation and accessible controls
+│   ├── Board.tsx / Cell.tsx
+│   ├── BoardPanel.tsx
+│   ├── FleetStatus.tsx
+│   ├── PlacementPanel.tsx
+│   └── Game.tsx
+└── styles.css                    # CSS-variable design system
 ```
 
-## Architecture
+## Architecture and state machine
 
-- `src/game/` contains UI-free board, placement, combat, fleet, and AI functions.
-- `src/hooks/useBattleship.ts` owns reducer-driven phases and delayed AI turns.
-- `src/components/` contains the accessible board and game presentation.
-- Tests are colocated in `__tests__` directories and run with Vitest + Testing Library.
+Game rules are kept pure under `src/game/`; they do not import React, access
+the DOM, or call `Math.random`. An RNG function is passed to random placement
+and AI decisions, which makes simulations deterministic. React presentation
+lives under `src/components/`, while `useBattleship` owns a reducer and a
+short-lived AI timer.
 
-The random placement and AI functions accept an injected RNG. The AI records every fired coordinate in a `Set`, hunts with parity filtering, queues orthogonal neighbors after hits, extends collinear hit runs, and purges targets when a ship sinks.
+```text
+placement ── Start mission ──> playerTurn
+    │                              │
+    │                              └─ Fire ──> aiTurn
+    │                                             │
+    │                        AI timer resolves ───┘
+    │
+    └─ New Game <──────── gameOver <── either fleet sunk
+```
+
+Every action is phase-gated. The AI timeout is cancelled on phase changes,
+unmount, and New Game; the reducer also ignores an AI action outside `aiTurn`.
+The reducer carries a deterministic seed counter rather than reading the
+clock, so React StrictMode cannot produce divergent AI results.
+
+## AI strategy
+
+1. **Hunt:** untried cells are filtered through a checkerboard parity mask.
+   The mask is based on the minimum remaining ship length, tightening as
+   smaller ships remain.
+2. **Target:** every hit adds orthogonal neighbors to a queue. The AI never
+   selects a coordinate in its fired set.
+3. **Line extension:** once two hits are collinear, cells continuing that axis
+   are preferred in both directions.
+4. **Sunk cleanup:** when a ship sinks, queued cells belonging to that ship and
+   its historical hits are purged, returning the opponent to a clean hunt.
+
+## Testing approach
+
+Vitest runs in jsdom with Testing Library for UI behavior. Focused tests cover
+empty boards, both placement orientations, all invalid placement boundaries,
+random legal fleets across many seeds, combat outcomes, repeated shots, win
+conditions, AI exhaustion and targeting behavior, parity, sunk cleanup, and
+the full random-deploy → start → fire → AI-turn → reset flow with fake timers.
+
+## Accessibility
+
+Both boards use labelled `role="grid"` containers with `role="row"` wrappers
+and focusable gridcell buttons. A–J and 1–10 coordinates are visible, cells
+have descriptive labels such as “C4, sunk Cruiser”, arrows move through the
+whole board including already-fired cells, and status/winner text uses polite
+live regions. Miss, hit, and sunk states use different colors, symbols, and
+border treatments rather than color alone.
 
 ## Deployment
 
 ### Vercel
 
-Import the repository in Vercel. Use the Vite preset, `npm run build` as the build command, and `dist` as the output directory. No environment variables are required.
+1. Push the repository to your Git provider.
+2. In Vercel, choose **Add New → Project** and import the repository.
+3. Keep the framework preset as Vite.
+4. Set **Build Command** to `npm run build`.
+5. Set **Output Directory** to `dist`.
+6. Deploy. `vercel.json` includes the SPA rewrite so direct routes resolve to
+   `index.html`. No environment variables are needed.
 
 ### Netlify
 
-Create a new site from the repository. Set build command to `npm run build` and publish directory to `dist`. This is a static SPA with no server configuration or secrets.
+1. In Netlify, choose **Add new site → Import an existing project**.
+2. Select the repository and choose the Vite preset if offered.
+3. Set **Build command** to `npm run build`.
+4. Set **Publish directory** to `dist`.
+5. Deploy. `netlify.toml` provides the SPA fallback redirect for direct routes.

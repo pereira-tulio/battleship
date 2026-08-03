@@ -7,4 +7,5 @@ export const FLEET: FleetSpec[] = [
   { name: 'Submarine', size: 3 },
   { name: 'Destroyer', size: 2 },
 ];
-export const shipSize = (name: ShipName) => FLEET.find((ship) => ship.name === name)?.size ?? 0;
+export const shipSize = (name: ShipName) =>
+  FLEET.find((ship) => ship.name === name)?.size ?? 0;
