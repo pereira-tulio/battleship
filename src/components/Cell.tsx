@@ -25,6 +25,8 @@ export function Cell({
   onHover,
   onKeyDown,
 }: CellProps) {
+  const hoverable = interactive && (status === 'unknown' || status === 'ship');
+
   return (
     <button
       type="button"
@@ -32,11 +34,11 @@ export function Cell({
       data-cell={`${coordinate.row},${coordinate.col}`}
       className={`cell cell-${status} ${
         preview ? `cell-preview-${previewValid ? 'valid' : 'invalid'}` : ''
-      }`}
+      } ${hoverable ? 'cell-interactive' : ''}`}
       aria-label={label}
       aria-disabled={!interactive}
-      onMouseEnter={() => onHover?.(coordinate)}
-      onFocus={() => onHover?.(coordinate)}
+      onMouseEnter={() => hoverable && onHover?.(coordinate)}
+      onFocus={() => hoverable && onHover?.(coordinate)}
       onKeyDown={(event) => onKeyDown(event, coordinate)}
       onClick={() => {
         if (interactive) onCell?.(coordinate);

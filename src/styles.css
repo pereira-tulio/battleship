@@ -65,11 +65,12 @@ button:focus-visible,
 .topbar::before {
   position: absolute;
   top: -25px;
-  left: -34px;
+  right: 220px;
+  left: auto;
   color: var(--yellow);
   content: 'FLEET';
   font-family: 'Big Shoulders Display', Impact, sans-serif;
-  font-size: 108px;
+  font-size: 90px;
   font-weight: 800;
   letter-spacing: -0.06em;
   line-height: 1;
@@ -461,7 +462,7 @@ kbd {
     color 180ms ease-out;
 }
 
-.cell:hover {
+.cell-interactive:hover {
   background: var(--orange);
   color: var(--paper);
 }
@@ -522,6 +523,10 @@ kbd {
   color: var(--black);
   font-size: 15px;
   font-weight: 600;
+}
+
+.game-content:not(.placement-content) > .legend {
+  margin-top: 8px;
 }
 
 .legend-swatch {
@@ -645,6 +650,10 @@ kbd {
   .topbar .button {
     padding: 9px 10px;
     font-size: 17px;
+  }
+
+  .topbar::before {
+    display: none;
   }
 
   .hero {
