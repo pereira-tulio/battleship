@@ -28,7 +28,7 @@ export function FleetStatus({
             <>
               <span>{spec.name}</span>
               <b>{spec.size}</b>
-              {sunk && <em aria-label="sunk">◆ sunk</em>}
+              {sunk && <em aria-label="sunk">Sunk</em>}
             </>
           );
 

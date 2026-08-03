@@ -57,7 +57,7 @@ export function BoardPanel({
             : 'Waters are locked.'
           : phase === 'placement'
             ? 'Select a coordinate to place your ship.'
-            : 'Your fleet is deployed. Waters are locked.'}
+            : 'Fleet deployed.'}
       </p>
     </div>
   );

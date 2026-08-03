@@ -35,9 +35,7 @@ describe('game flow', () => {
     render(<Game />);
     fireEvent.click(screen.getByRole('button', { name: /random placement/i }));
     fireEvent.click(screen.getByRole('button', { name: /start mission/i }));
-    expect(
-      screen.getByText('Your fleet is deployed. Waters are locked.'),
-    ).toBeInTheDocument();
+    expect(screen.getByText('Fleet deployed.')).toBeInTheDocument();
     expect(screen.getByText('Select a coordinate to fire.')).toBeInTheDocument();
   });
 

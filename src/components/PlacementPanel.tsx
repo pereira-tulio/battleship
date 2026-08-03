@@ -29,7 +29,7 @@ export function PlacementPanel({
         <p className="control-heading">Place your fleet</p>
         <p className="control-copy">
           Place <strong>{selected}</strong> ({selectedSpec?.size} cells){' '}
-          <span className="orientation">• {orientation}</span>
+          <span className="orientation">{orientation}</span>
         </p>
         <FleetStatus
           board={playerBoard}

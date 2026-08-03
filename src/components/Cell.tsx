@@ -1,5 +1,6 @@
 import type { KeyboardEvent } from 'react';
 import type { CellMark, Coordinate } from '../game/types';
+import { CellMark as CellMarkIcon } from './CellMark';
 
 type CellProps = {
   coordinate: Coordinate;
@@ -24,9 +25,6 @@ export function Cell({
   onHover,
   onKeyDown,
 }: CellProps) {
-  const icon =
-    status === 'hit' ? '✦' : status === 'sunk' ? '◆' : status === 'miss' ? '•' : '';
-
   return (
     <button
       type="button"
@@ -44,7 +42,7 @@ export function Cell({
         if (interactive) onCell?.(coordinate);
       }}
     >
-      <span aria-hidden="true">{icon}</span>
+      {status !== 'unknown' && status !== 'ship' && <CellMarkIcon status={status} />}
     </button>
   );
 }

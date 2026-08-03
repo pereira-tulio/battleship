@@ -7,19 +7,29 @@ import { BoardPanel } from './BoardPanel';
 import { GameHeader } from './GameHeader';
 import { PlacementPanel } from './PlacementPanel';
 import { StatusBanner } from './StatusBanner';
+import { CellMark } from './CellMark';
 import '../styles.css';
 
 function Legend() {
   return (
     <div className="legend" aria-label="Board legend">
       <span>
-        <i className="legend-swatch legend-miss">•</i> Miss
+        <i className="legend-swatch legend-miss">
+          <CellMark status="miss" />
+        </i>{' '}
+        Miss
       </span>
       <span>
-        <i className="legend-swatch legend-hit">✦</i> Hit
+        <i className="legend-swatch legend-hit">
+          <CellMark status="hit" />
+        </i>{' '}
+        Hit
       </span>
       <span>
-        <i className="legend-swatch legend-sunk">◆</i> Sunk
+        <i className="legend-swatch legend-sunk">
+          <CellMark status="sunk" />
+        </i>{' '}
+        Sunk
       </span>
     </div>
   );
