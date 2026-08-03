@@ -34,7 +34,6 @@ export function BoardPanel({
     <div className={`board-panel ${enemy ? 'enemy-panel' : ''}`}>
       <div className="panel-heading">
         <div>
-          <span className="eyebrow">{enemy ? 'BRAVO FLEET' : 'ALPHA FLEET'}</span>
           <h3>{enemy ? 'Enemy waters' : 'Your waters'}</h3>
         </div>
         <span className="counter">{shotsLabel}</span>

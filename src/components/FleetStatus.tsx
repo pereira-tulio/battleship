@@ -18,7 +18,7 @@ export function FleetStatus({
 }: FleetStatusProps) {
   return (
     <div className="fleet-status">
-      <span className="eyebrow">{label}</span>
+      <h4>{label}</h4>
       <div className="fleet-list">
         {FLEET.map((spec) => {
           const ship = board.ships.find((item) => item.name === spec.name);

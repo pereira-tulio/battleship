@@ -26,8 +26,8 @@ export function PlacementPanel({
   return (
     <section className="controls">
       <div>
-        <span className="eyebrow">DEPLOYMENT</span>
-        <p>
+        <p className="control-heading">Place your fleet</p>
+        <p className="control-copy">
           Place <strong>{selected}</strong> ({selectedSpec?.size} cells){' '}
           <span className="orientation">• {orientation}</span>
         </p>
