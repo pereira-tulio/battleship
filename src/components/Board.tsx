@@ -1,11 +1,12 @@
 import { shipCells } from '../game/combat';
-import type { Board as BoardType, Coordinate } from '../game/types';
+import type { Board as BoardType, Coordinate, ShipName } from '../game/types';
 import { BOARD_SIZE, keyOf } from '../game/types';
 import { Cell } from './Cell';
 import { handleGridKeyDown } from './boardNavigation';
 
 type Preview = {
   start: Coordinate;
+  name: ShipName;
   size: number;
   orientation: 'horizontal' | 'vertical';
 };
@@ -86,6 +87,26 @@ export function Board({
                   : ship && !enemy
                     ? 'ship'
                     : 'unknown';
+                const vessel =
+                  ship && (!enemy || status === 'sunk') && keyOf(ship.start) === key
+                    ? {
+                        name: ship.name,
+                        size: ship.size,
+                        orientation: ship.orientation,
+                      }
+                    : undefined;
+                const previewVessel =
+                  !vessel &&
+                  !enemy &&
+                  preview &&
+                  previewValid &&
+                  keyOf(preview.start) === key
+                    ? {
+                        name: preview.name,
+                        size: preview.size,
+                        orientation: preview.orientation,
+                      }
+                    : undefined;
                 const label = `${String.fromCharCode(65 + cell.col)}${cell.row + 1}, ${
                   status === 'unknown' ? 'unexplored' : status
                 }${ship && (!enemy || status === 'sunk') ? ` ${ship.name}` : ''}`;
@@ -101,6 +122,7 @@ export function Board({
                     previewValid={previewValid}
                     latest={latestShot ? keyOf(latestShot) === key : false}
                     aiming={aimingShot ? keyOf(aimingShot) === key : false}
+                    vessel={vessel ?? previewVessel}
                     onHover={onHover}
                     onCell={onCell}
                     onKeyDown={handleGridKeyDown}

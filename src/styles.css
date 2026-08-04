@@ -544,6 +544,37 @@ kbd {
     color 180ms ease-out;
 }
 
+.cell-vessel-anchor {
+  position: relative;
+  z-index: 2;
+  overflow: visible;
+}
+
+.cell-vessel {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  display: block;
+  height: 72%;
+  color: var(--yellow);
+  pointer-events: none;
+  transform: translateY(-50%);
+  transform-origin: left center;
+}
+
+.cell-vessel .ship-icon {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.cell-vessel-vertical {
+  top: 0;
+  left: 100%;
+  transform: rotate(90deg);
+  transform-origin: top left;
+}
+
 .cell-interactive:hover {
   background: var(--orange);
   color: var(--paper);

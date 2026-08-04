@@ -1,4 +1,4 @@
-import type { Board, Coordinate, Ship, ShotResult } from './types';
+import type { Board, Coordinate, Ship, ShipName, ShotResult } from './types';
 import { cellsForShip } from './board';
 import { keyOf } from './types';
 
@@ -11,7 +11,7 @@ export const allShipsSunk = (board: Board) =>
 export const fireAt = (
   board: Board,
   coordinate: Coordinate,
-): { board: Board; result: ShotResult } | null => {
+): { board: Board; result: ShotResult; shipName?: ShipName } | null => {
   const key = keyOf(coordinate);
   if (board.shots[key]) return null;
   const shipIndex = board.ships.findIndex((ship) =>
@@ -37,5 +37,6 @@ export const fireAt = (
   return {
     board: { ...board, ships, shots },
     result: sunk ? 'sunk' : 'hit',
+    shipName: sunk ? ship.name : undefined,
   };
 };

@@ -99,6 +99,7 @@ export function Game() {
       hover && selectedSpec
         ? {
             start: hover,
+            name: selectedSpec.name,
             size: selectedSpec.size,
             orientation: state.orientation,
           }

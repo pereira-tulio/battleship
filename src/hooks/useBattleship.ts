@@ -135,6 +135,10 @@ export function battleshipReducer(state: GameState, action: Action): GameState {
       const targetLabel = aiTarget
         ? `${String.fromCharCode(65 + aiTarget.col)}${aiTarget.row + 1}`
         : '';
+      const playerShotMessage =
+        outcome.result === 'sunk' && outcome.shipName
+          ? `You sank their ${outcome.shipName}.`
+          : `You ${outcome.result}.`;
       return {
         ...state,
         enemy: outcome.board,
@@ -143,8 +147,8 @@ export function battleshipReducer(state: GameState, action: Action): GameState {
         aiTarget,
         latestEnemyShot: action.coordinate,
         message: playerWon
-          ? 'You sank the entire enemy fleet!'
-          : `You ${outcome.result}. Enemy is taking aim at ${targetLabel}.`,
+          ? `You sank their ${outcome.shipName ?? 'last ship'} and the entire enemy fleet!`
+          : `${playerShotMessage} Enemy is taking aim at ${targetLabel}.`,
       };
     }
     case 'ai-fire': {
@@ -154,6 +158,10 @@ export function battleshipReducer(state: GameState, action: Action): GameState {
       const coordinateLabel = `${String.fromCharCode(65 + outcome.coordinate.col)}${
         outcome.coordinate.row + 1
       }`;
+      const enemyShotMessage =
+        outcome.result === 'sunk' && outcome.shipName
+          ? `Enemy fired at ${coordinateLabel} and sank your ${outcome.shipName}.`
+          : `Enemy fired at ${coordinateLabel} — ${outcome.result}.`;
       return {
         ...state,
         player: outcome.board,
@@ -164,8 +172,8 @@ export function battleshipReducer(state: GameState, action: Action): GameState {
         aiTarget: null,
         latestPlayerShot: outcome.coordinate,
         message: aiWon
-          ? 'The enemy fleet wins this round.'
-          : `Enemy fired at ${coordinateLabel} — ${outcome.result}.`,
+          ? `The enemy sank your ${outcome.shipName ?? 'last ship'} and wins this round.`
+          : enemyShotMessage,
       };
     }
     case 'ai-complete':

@@ -53,6 +53,7 @@ export const aiFire = (
   state: AIState;
   coordinate: Coordinate;
   result: 'hit' | 'miss' | 'sunk';
+  shipName?: Board['ships'][number]['name'];
 } => {
   const coordinate = chooseTarget(board, state, rng);
   const result = fireAt(board, coordinate);
@@ -103,7 +104,13 @@ export const aiFire = (
       next.hits = next.hits.filter((cell) => !sunkKeys.has(keyOf(cell)));
     }
   }
-  return { board: result.board, state: next, coordinate, result: result.result };
+  return {
+    board: result.board,
+    state: next,
+    coordinate,
+    result: result.result,
+    shipName: result.shipName,
+  };
 };
 
 function shipCells(ship: Board['ships'][number]) {

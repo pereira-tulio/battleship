@@ -21,7 +21,10 @@ describe('combat', () => {
 
   it('reports a sunk ship', () => {
     const first = fireAt(destroyerBoard(), { row: 1, col: 1 })!;
-    expect(fireAt(first.board, { row: 1, col: 2 })?.result).toBe('sunk');
+    expect(fireAt(first.board, { row: 1, col: 2 })).toMatchObject({
+      result: 'sunk',
+      shipName: 'Destroyer',
+    });
   });
 
   it('marks every cell of a sunk ship', () => {
