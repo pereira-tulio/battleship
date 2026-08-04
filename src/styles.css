@@ -566,6 +566,7 @@ kbd {
   display: block;
   width: 100%;
   height: 100%;
+  transform: scaleX(1.08);
 }
 
 .cell-vessel-vertical {
@@ -687,6 +688,11 @@ kbd {
 .legend-swatch .cell-mark {
   width: 70%;
   height: 70%;
+}
+
+.legend-swatch .ship-icon {
+  width: 78%;
+  height: 58%;
 }
 
 .legend-miss {

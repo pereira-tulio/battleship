@@ -122,6 +122,7 @@ export function Board({
                     previewValid={previewValid}
                     latest={latestShot ? keyOf(latestShot) === key : false}
                     aiming={aimingShot ? keyOf(aimingShot) === key : false}
+                    hideMark={status === 'sunk' && Boolean(ship)}
                     vessel={vessel ?? previewVessel}
                     onHover={onHover}
                     onCell={onCell}

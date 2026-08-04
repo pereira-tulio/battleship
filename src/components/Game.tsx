@@ -10,6 +10,7 @@ import { PlacementPanel } from './PlacementPanel';
 import { StatusBanner } from './StatusBanner';
 import { CellMark } from './CellMark';
 import { AttackIcon } from './AttackIcon';
+import { ShipIcon } from './ShipIcon';
 import '../styles.css';
 
 function Legend() {
@@ -29,7 +30,7 @@ function Legend() {
       </span>
       <span>
         <i className="legend-swatch legend-sunk">
-          <CellMark status="sunk" />
+          <ShipIcon name="Destroyer" />
         </i>{' '}
         Sunk
       </span>

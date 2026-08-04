@@ -12,6 +12,7 @@ type CellProps = {
   previewValid: boolean;
   latest: boolean;
   aiming: boolean;
+  hideMark?: boolean;
   vessel?: {
     name: ShipName;
     size: number;
@@ -31,6 +32,7 @@ export function Cell({
   previewValid,
   latest,
   aiming,
+  hideMark = false,
   vessel,
   onCell,
   onHover,
@@ -60,7 +62,9 @@ export function Cell({
       {aiming ? (
         <CellMarkIcon status="aim" />
       ) : (
-        status !== 'unknown' && status !== 'ship' && <CellMarkIcon status={status} />
+        status !== 'unknown' &&
+        status !== 'ship' &&
+        !hideMark && <CellMarkIcon status={status} />
       )}
       {vessel && (
         <span
