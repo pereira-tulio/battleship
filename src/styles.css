@@ -582,13 +582,13 @@ kbd {
 }
 
 .cell-vessel-half-a {
-  clip-path: inset(0 48% 0 0);
+  clip-path: inset(0 50% 0 0);
   transform-origin: right center;
   animation: wreck-half-a 620ms ease-out forwards;
 }
 
 .cell-vessel-half-b {
-  clip-path: inset(0 0 0 48%);
+  clip-path: inset(0 0 0 50%);
   transform-origin: left center;
   animation: wreck-half-b 620ms ease-out forwards;
 }
@@ -602,19 +602,23 @@ kbd {
 
 @keyframes wreck-half-a {
   from {
+    opacity: 1;
     transform: translate(0, 0) rotate(0deg);
   }
   to {
-    transform: translate(-4px, 2px) rotate(-4deg);
+    opacity: 0.72;
+    transform: translate(-9px, 6px) rotate(-11deg);
   }
 }
 
 @keyframes wreck-half-b {
   from {
+    opacity: 1;
     transform: translate(0, 0) rotate(0deg);
   }
   to {
-    transform: translate(4px, -1px) rotate(4deg);
+    opacity: 0.72;
+    transform: translate(9px, 5px) rotate(11deg);
   }
 }
 
@@ -825,12 +829,14 @@ kbd {
 @media (prefers-reduced-motion: reduce) {
   .cell-vessel-half-a {
     animation: none;
-    transform: translate(-4px, 2px) rotate(-4deg);
+    opacity: 0.72;
+    transform: translate(-9px, 6px) rotate(-11deg);
   }
 
   .cell-vessel-half-b {
     animation: none;
-    transform: translate(4px, -1px) rotate(4deg);
+    opacity: 0.72;
+    transform: translate(9px, 5px) rotate(11deg);
   }
 
   *,
