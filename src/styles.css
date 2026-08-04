@@ -575,6 +575,10 @@ kbd {
   overflow: visible;
 }
 
+.cell-vessel-wreck {
+  height: 52%;
+}
+
 .cell-vessel-half .ship-icon {
   display: block;
   width: 100%;
@@ -606,8 +610,8 @@ kbd {
     transform: translate(0, 0) rotate(0deg) scale(1);
   }
   to {
-    opacity: 0.72;
-    transform: translate(-5px, 0) rotate(-2deg) scale(0.9);
+    opacity: 1;
+    transform: translate(-5px, 0) rotate(-4deg);
   }
 }
 
@@ -617,8 +621,8 @@ kbd {
     transform: translate(0, 0) rotate(0deg) scale(1);
   }
   to {
-    opacity: 0.72;
-    transform: translate(5px, 0) rotate(2deg) scale(0.9);
+    opacity: 1;
+    transform: translate(5px, 0) rotate(4deg);
   }
 }
 
@@ -829,14 +833,14 @@ kbd {
 @media (prefers-reduced-motion: reduce) {
   .cell-vessel-half-a {
     animation: none;
-    opacity: 0.72;
-    transform: translate(-5px, 0) rotate(-2deg) scale(0.9);
+    opacity: 1;
+    transform: translate(-5px, 0) rotate(-4deg);
   }
 
   .cell-vessel-half-b {
     animation: none;
-    opacity: 0.72;
-    transform: translate(5px, 0) rotate(2deg) scale(0.9);
+    opacity: 1;
+    transform: translate(5px, 0) rotate(4deg);
   }
 
   *,
