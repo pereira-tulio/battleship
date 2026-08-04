@@ -70,7 +70,9 @@ export function Cell({
         <span
           className={`cell-vessel cell-vessel-${vessel.orientation}`}
           style={{
-            width: `calc(${vessel.size * 100}% + ${(vessel.size - 1) * 3}px)`,
+            width: `calc(${vessel.size * 100}% + ${
+              (vessel.size - 1) * 3 + vessel.size * 4
+            }px)`,
           }}
           aria-hidden="true"
         >

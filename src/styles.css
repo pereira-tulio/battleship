@@ -5,7 +5,7 @@
   font-synthesis: none;
   --black: #061820;
   --paper: #f5f0df;
-  --yellow: #c5e5df;
+  --foam: #c5e5df;
   --orange: #ed4b24;
   --orange-dark: #7d2417;
   --gray: #c5d2ce;
@@ -72,7 +72,7 @@ button:focus-visible,
   top: -25px;
   right: 220px;
   left: auto;
-  color: var(--yellow);
+  color: var(--foam);
   content: 'FLEET';
   font-family: 'Big Shoulders Display', Impact, sans-serif;
   font-size: 90px;
@@ -118,7 +118,7 @@ h4,
   z-index: 2;
   padding: 13px 18px;
   border: 4px solid var(--black);
-  background: var(--yellow);
+  background: var(--foam);
   color: var(--black);
   cursor: pointer;
   font-family: 'Big Shoulders Display', Impact, sans-serif;
@@ -183,7 +183,7 @@ h4,
 }
 
 .status-aiTurn {
-  background: var(--yellow);
+  background: var(--foam);
 }
 
 .status-gameOver {
@@ -556,7 +556,7 @@ kbd {
   left: 0;
   display: block;
   height: 72%;
-  color: var(--yellow);
+  color: var(--foam);
   pointer-events: none;
   transform: translateY(-50%);
   transform-origin: left center;
@@ -566,7 +566,6 @@ kbd {
   display: block;
   width: 100%;
   height: 100%;
-  transform: scaleX(1.08);
 }
 
 .cell-vessel-vertical {
@@ -591,7 +590,7 @@ kbd {
 }
 
 .cell-sunk.cell-latest {
-  outline-color: var(--yellow);
+  outline-color: var(--foam);
 }
 
 .cell-aiming {
@@ -606,7 +605,7 @@ kbd {
   border-color: var(--black);
   background: var(--black);
   background-image: none;
-  color: var(--yellow);
+  color: var(--foam);
   box-shadow: inset 0 -5px 0 rgba(197, 229, 223, 0.28);
 }
 
@@ -620,8 +619,8 @@ kbd {
 .cell-sunk {
   background: var(--black);
   background-image: none;
-  color: var(--yellow);
-  box-shadow: inset 0 0 0 3px var(--yellow);
+  color: var(--foam);
+  box-shadow: inset 0 0 0 3px var(--foam);
 }
 
 .cell-miss {
@@ -647,7 +646,7 @@ kbd {
 
 .cell-preview-valid {
   background: var(--black);
-  color: var(--yellow);
+  color: var(--foam);
   box-shadow:
     inset 0 0 0 3px var(--orange),
     inset 0 -5px 0 rgba(197, 229, 223, 0.28);
@@ -709,7 +708,7 @@ kbd {
 
 .legend-sunk {
   background: var(--black);
-  color: var(--yellow);
+  color: var(--foam);
   transform: rotate(3deg);
 }
 
@@ -746,7 +745,7 @@ kbd {
 
 .start-button:hover {
   background: var(--black);
-  color: var(--yellow);
+  color: var(--foam);
 }
 
 .start-button:disabled {
@@ -772,7 +771,7 @@ kbd {
     background: var(--orange);
   }
   50% {
-    background: var(--yellow);
+    background: var(--foam);
   }
 }
 
