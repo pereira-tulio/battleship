@@ -16,6 +16,8 @@ type BoardProps = {
   interactive?: boolean;
   preview?: Preview | null;
   previewValid?: boolean;
+  latestShot?: Coordinate | null;
+  aimingShot?: Coordinate | null;
   onCell?: (cell: Coordinate) => void;
   onHover?: (cell: Coordinate) => void;
   onMouseLeave?: () => void;
@@ -43,6 +45,8 @@ export function Board({
   interactive = false,
   preview,
   previewValid = true,
+  latestShot = null,
+  aimingShot = null,
   onCell,
   onHover,
   onMouseLeave,
@@ -95,6 +99,8 @@ export function Board({
                     interactive={interactive}
                     preview={isPreviewCell(cell, preview)}
                     previewValid={previewValid}
+                    latest={latestShot ? keyOf(latestShot) === key : false}
+                    aiming={aimingShot ? keyOf(aimingShot) === key : false}
                     onHover={onHover}
                     onCell={onCell}
                     onKeyDown={handleGridKeyDown}

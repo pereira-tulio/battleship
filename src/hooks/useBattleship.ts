@@ -1,11 +1,11 @@
 import { useCallback, useEffect, useReducer, useRef } from 'react';
-import { aiFire, createAIState, type AIState } from '../game/ai';
+import { aiFire, chooseTarget, createAIState, type AIState } from '../game/ai';
 import { allShipsSunk, fireAt } from '../game/combat';
 import { createBoard, placeShip, randomPlacement } from '../game/board';
 import { FLEET } from '../game/fleet';
 import type { Board, Coordinate, Orientation, RNG, ShipName } from '../game/types';
 
-export type Phase = 'placement' | 'playerTurn' | 'aiTurn' | 'gameOver';
+export type Phase = 'placement' | 'playerTurn' | 'aiAiming' | 'aiTurn' | 'gameOver';
 export type Winner = 'player' | 'ai' | null;
 export type GameState = {
   phase: Phase;
@@ -17,6 +17,9 @@ export type GameState = {
   winner: Winner;
   message: string;
   rngSeed: number;
+  aiTarget: Coordinate | null;
+  latestPlayerShot: Coordinate | null;
+  latestEnemyShot: Coordinate | null;
 };
 
 export type Action =
@@ -28,6 +31,7 @@ export type Action =
   | { type: 'start' }
   | { type: 'fire'; coordinate: Coordinate }
   | { type: 'ai-fire' }
+  | { type: 'ai-complete' }
   | { type: 'new' };
 
 export const seeded =
@@ -47,6 +51,9 @@ export const createInitialState = (seed = 42): GameState => ({
   winner: null,
   message: 'Deploy your fleet to begin.',
   rngSeed: seed + 1,
+  aiTarget: null,
+  latestPlayerShot: null,
+  latestEnemyShot: null,
 });
 
 const nextUnplaced = (board: Board) =>
@@ -122,32 +129,49 @@ export function battleshipReducer(state: GameState, action: Action): GameState {
       const outcome = fireAt(state.enemy, action.coordinate);
       if (!outcome) return state;
       const playerWon = allShipsSunk(outcome.board);
+      const aiTarget = playerWon
+        ? null
+        : chooseTarget(state.player, state.ai, seeded(state.rngSeed));
+      const targetLabel = aiTarget
+        ? `${String.fromCharCode(65 + aiTarget.col)}${aiTarget.row + 1}`
+        : '';
       return {
         ...state,
         enemy: outcome.board,
-        phase: playerWon ? 'gameOver' : 'aiTurn',
+        phase: playerWon ? 'gameOver' : 'aiAiming',
         winner: playerWon ? 'player' : null,
+        aiTarget,
+        latestEnemyShot: action.coordinate,
         message: playerWon
           ? 'You sank the entire enemy fleet!'
-          : `You ${outcome.result}. Enemy is taking aim...`,
+          : `You ${outcome.result}. Enemy is taking aim at ${targetLabel}.`,
       };
     }
     case 'ai-fire': {
-      if (state.phase !== 'aiTurn') return state;
+      if (state.phase !== 'aiAiming' || !state.aiTarget) return state;
       const outcome = aiFire(state.player, state.ai, seeded(state.rngSeed));
       const aiWon = allShipsSunk(outcome.board);
+      const coordinateLabel = `${String.fromCharCode(65 + outcome.coordinate.col)}${
+        outcome.coordinate.row + 1
+      }`;
       return {
         ...state,
         player: outcome.board,
         ai: outcome.state,
         rngSeed: state.rngSeed + 1,
-        phase: aiWon ? 'gameOver' : 'playerTurn',
+        phase: aiWon ? 'gameOver' : 'aiTurn',
         winner: aiWon ? 'ai' : null,
+        aiTarget: null,
+        latestPlayerShot: outcome.coordinate,
         message: aiWon
           ? 'The enemy fleet wins this round.'
-          : `Enemy ${outcome.result}. Your turn.`,
+          : `Enemy fired at ${coordinateLabel} — ${outcome.result}.`,
       };
     }
+    case 'ai-complete':
+      return state.phase === 'aiTurn'
+        ? { ...state, phase: 'playerTurn', message: `${state.message} Your turn.` }
+        : state;
   }
 }
 
@@ -158,8 +182,14 @@ export function useBattleship() {
   const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
-    if (state.phase !== 'aiTurn') return undefined;
-    timer.current = setTimeout(() => dispatch({ type: 'ai-fire' }), 650);
+    if (state.phase !== 'aiAiming' && state.phase !== 'aiTurn') return undefined;
+    timer.current = setTimeout(
+      () =>
+        dispatch({
+          type: state.phase === 'aiAiming' ? 'ai-fire' : 'ai-complete',
+        }),
+      state.phase === 'aiAiming' ? 700 : 500,
+    );
     return () => {
       if (timer.current) clearTimeout(timer.current);
     };

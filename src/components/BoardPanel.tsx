@@ -9,6 +9,8 @@ type BoardPanelProps = {
   interactive?: boolean;
   preview?: Parameters<typeof GameBoard>[0]['preview'];
   previewValid?: boolean;
+  latestShot?: Parameters<typeof GameBoard>[0]['latestShot'];
+  aimingShot?: Parameters<typeof GameBoard>[0]['aimingShot'];
   onCell?: Parameters<typeof GameBoard>[0]['onCell'];
   onHover?: Parameters<typeof GameBoard>[0]['onHover'];
   onMouseLeave?: () => void;
@@ -23,6 +25,8 @@ export function BoardPanel({
   interactive = false,
   preview,
   previewValid,
+  latestShot,
+  aimingShot,
   onCell,
   onHover,
   onMouseLeave,
@@ -44,6 +48,8 @@ export function BoardPanel({
         interactive={interactive}
         preview={preview}
         previewValid={previewValid}
+        latestShot={latestShot}
+        aimingShot={aimingShot}
         onCell={onCell}
         onHover={onHover}
         onMouseLeave={onMouseLeave}

@@ -9,6 +9,8 @@ type CellProps = {
   interactive: boolean;
   preview: boolean;
   previewValid: boolean;
+  latest: boolean;
+  aiming: boolean;
   onCell?: (cell: Coordinate) => void;
   onHover?: (cell: Coordinate) => void;
   onKeyDown: (event: KeyboardEvent<HTMLButtonElement>, cell: Coordinate) => void;
@@ -21,6 +23,8 @@ export function Cell({
   interactive,
   preview,
   previewValid,
+  latest,
+  aiming,
   onCell,
   onHover,
   onKeyDown,
@@ -32,9 +36,9 @@ export function Cell({
       type="button"
       role="gridcell"
       data-cell={`${coordinate.row},${coordinate.col}`}
-      className={`cell cell-${status} ${
+      className={`cell cell-${status} ${latest ? 'cell-latest' : ''} ${
         preview ? `cell-preview-${previewValid ? 'valid' : 'invalid'}` : ''
-      } ${hoverable ? 'cell-interactive' : ''}`}
+      } ${hoverable ? 'cell-interactive' : ''} ${aiming ? 'cell-aiming' : ''}`}
       aria-label={label}
       aria-disabled={!interactive}
       onMouseEnter={() => hoverable && onHover?.(coordinate)}
@@ -44,7 +48,11 @@ export function Cell({
         if (interactive) onCell?.(coordinate);
       }}
     >
-      {status !== 'unknown' && status !== 'ship' && <CellMarkIcon status={status} />}
+      {aiming ? (
+        <CellMarkIcon status="aim" />
+      ) : (
+        status !== 'unknown' && status !== 'ship' && <CellMarkIcon status={status} />
+      )}
     </button>
   );
 }

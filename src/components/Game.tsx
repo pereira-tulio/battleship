@@ -1,7 +1,8 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { canPlaceShip } from '../game/board';
 import { FLEET } from '../game/fleet';
 import { useBattleship } from '../hooks/useBattleship';
+import { useBattleSounds } from '../hooks/useBattleSounds';
 import type { Coordinate } from '../game/types';
 import { BoardPanel } from './BoardPanel';
 import { GameHeader } from './GameHeader';
@@ -47,7 +48,29 @@ export function Game() {
     start,
     newGame,
   } = useBattleship();
+  const sounds = useBattleSounds();
   const [hover, setHover] = useState<Coordinate | null>(null);
+  const heardShots = useRef({ player: '', enemy: '' });
+
+  useEffect(() => {
+    const shot = state.latestEnemyShot;
+    if (!shot) return;
+    const key = `${shot.row},${shot.col}`;
+    if (heardShots.current.enemy === key) return;
+    heardShots.current.enemy = key;
+    const result = state.enemy.shots[key];
+    if (result) sounds.playShot(result);
+  }, [sounds, state.enemy.shots, state.latestEnemyShot]);
+
+  useEffect(() => {
+    const shot = state.latestPlayerShot;
+    if (!shot) return;
+    const key = `${shot.row},${shot.col}`;
+    if (heardShots.current.player === key) return;
+    heardShots.current.player = key;
+    const result = state.player.shots[key];
+    if (result) sounds.playShot(result);
+  }, [sounds, state.latestPlayerShot, state.player.shots]);
 
   useEffect(() => {
     setHover(null);
@@ -82,7 +105,11 @@ export function Game() {
 
   return (
     <main className="shell">
-      <GameHeader onNewGame={newGame} />
+      <GameHeader
+        muted={sounds.muted}
+        onNewGame={newGame}
+        onToggleMute={() => sounds.setMuted(!sounds.muted)}
+      />
       <StatusBanner phase={state.phase} message={state.message} onNewGame={newGame} />
 
       <div
@@ -108,6 +135,8 @@ export function Game() {
             preview={state.phase === 'placement' ? preview : null}
             previewValid={previewValid}
             interactive={state.phase === 'placement'}
+            latestShot={state.latestPlayerShot}
+            aimingShot={state.phase === 'aiAiming' ? state.aiTarget : null}
             onHover={setHover}
             onMouseLeave={() => setHover(null)}
             onBlur={() => setHover(null)}
@@ -130,7 +159,11 @@ export function Game() {
             board={state.enemy}
             enemy
             interactive={state.phase === 'playerTurn'}
-            onCell={fire}
+            latestShot={state.latestEnemyShot}
+            onCell={(cell) => {
+              sounds.arm();
+              fire(cell);
+            }}
             phase={state.phase}
             shotsLabel={`${Object.keys(state.enemy.shots).length} shots`}
           />

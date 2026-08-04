@@ -15,6 +15,18 @@ describe('game flow', () => {
     expect(screen.getAllByText('10').length).toBeGreaterThan(0);
   });
 
+  it('provides a keyboard-accessible persistent sound toggle', () => {
+    window.localStorage.clear();
+    render(<Game />);
+    const toggle = screen.getByRole('button', { name: 'Mute shot sounds' });
+    fireEvent.click(toggle);
+    expect(
+      screen.getByRole('button', { name: 'Enable shot sounds' }),
+    ).toBeInTheDocument();
+    expect(window.localStorage.getItem('battleship-muted')).toBe('true');
+    window.localStorage.clear();
+  });
+
   it('supports random deployment and starting a mission', () => {
     render(<Game />);
     fireEvent.click(screen.getByRole('button', { name: /random placement/i }));
@@ -82,7 +94,46 @@ describe('game flow', () => {
     expect(screen.getByText(/enemy is taking aim/i)).toBeInTheDocument();
     expect(cell).toHaveAttribute('aria-label', expect.stringMatching(/hit|miss|sunk/));
     act(() => vi.advanceTimersByTime(700));
+    expect(screen.getByText(/enemy fired at/i)).toBeInTheDocument();
+    act(() => vi.advanceTimersByTime(500));
     expect(screen.getByText(/your turn/i)).toBeInTheDocument();
+    vi.useRealTimers();
+  });
+
+  it('marks the incoming AI target during the aiming beat', () => {
+    vi.useFakeTimers();
+    render(<Game />);
+    fireEvent.click(screen.getByRole('button', { name: /random placement/i }));
+    fireEvent.click(screen.getByRole('button', { name: /start mission/i }));
+    fireEvent.click(
+      screen
+        .getByRole('grid', { name: /enemy waters/i })
+        .querySelector('[data-cell="0,0"]')!,
+    );
+    act(() => vi.advanceTimersByTime(300));
+    expect(screen.getByText('Incoming')).toBeInTheDocument();
+    expect(
+      screen
+        .getByRole('grid', { name: /your fleet/i })
+        .querySelectorAll('.cell-aiming'),
+    ).toHaveLength(1);
+    vi.useRealTimers();
+  });
+
+  it('clears the aiming phase during New Game', () => {
+    vi.useFakeTimers();
+    render(<Game />);
+    fireEvent.click(screen.getByRole('button', { name: /random placement/i }));
+    fireEvent.click(screen.getByRole('button', { name: /start mission/i }));
+    fireEvent.click(
+      screen
+        .getByRole('grid', { name: /enemy waters/i })
+        .querySelector('[data-cell="0,0"]')!,
+    );
+    expect(screen.getByText(/enemy is taking aim/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /new game/i }));
+    act(() => vi.advanceTimersByTime(2000));
+    expect(screen.getByText(/deploy your fleet/i)).toBeInTheDocument();
     vi.useRealTimers();
   });
 
@@ -99,6 +150,25 @@ describe('game flow', () => {
     fireEvent.click(screen.getByRole('button', { name: /new game/i }));
     expect(screen.getByText(/deploy your fleet/i)).toBeInTheDocument();
     act(() => vi.advanceTimersByTime(1000));
+    expect(screen.getByText('0 hits taken')).toBeInTheDocument();
+    vi.useRealTimers();
+  });
+
+  it('prevents a stale completion after New Game during the impact delay', () => {
+    vi.useFakeTimers();
+    render(<Game />);
+    fireEvent.click(screen.getByRole('button', { name: /random placement/i }));
+    fireEvent.click(screen.getByRole('button', { name: /start mission/i }));
+    fireEvent.click(
+      screen
+        .getByRole('grid', { name: /enemy waters/i })
+        .querySelector('[data-cell="0,0"]')!,
+    );
+    act(() => vi.advanceTimersByTime(700));
+    expect(screen.getByText(/enemy fired at/i)).toBeInTheDocument();
+    fireEvent.click(screen.getByRole('button', { name: /new game/i }));
+    act(() => vi.advanceTimersByTime(1000));
+    expect(screen.getByText(/deploy your fleet/i)).toBeInTheDocument();
     expect(screen.getByText('0 hits taken')).toBeInTheDocument();
     vi.useRealTimers();
   });

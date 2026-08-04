@@ -12,11 +12,13 @@ export function StatusBanner({ phase, message, onNewGame }: StatusBannerProps) {
       ? 'Deployment'
       : phase === 'playerTurn'
         ? 'Your move'
-        : phase === 'aiTurn'
-          ? 'Enemy move'
-          : message.includes('entire enemy fleet')
-            ? 'Victory'
-            : 'Defeat';
+        : phase === 'aiAiming'
+          ? 'Incoming'
+          : phase === 'aiTurn'
+            ? 'Impact'
+            : message.includes('entire enemy fleet')
+              ? 'Victory'
+              : 'Defeat';
 
   return (
     <section className="hero">

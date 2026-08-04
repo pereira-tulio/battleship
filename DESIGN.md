@@ -26,10 +26,18 @@ active call to action.
   fixed geometry.
 - Miss, hit, and sunk marks are authored SVG symbols; focus uses a paper inner
   ring and black outer ring so it survives every cell and button surface.
+- Enemy fire is a three-beat poster cue: incoming aim, impact, then handoff.
+  The aimed cell pulses with an authored target mark, while the latest shot on
+  each board keeps a quiet outline after resolution.
+- Sound is synthesized with a short Web Audio oscillator cue, on by default
+  behind an always-visible masthead Sound on/Sound off control. The preference
+  persists locally, and unavailable audio APIs fail silently.
 
 ## Motion and responsive behavior
 
-The turn band is the single authored poster-rise moment with an exponential
-ease-out. Reduced-motion users receive the same visible state without the
-animation. At narrow widths the boards stack, labels remain inside each board
-frame, and the action controls wrap without horizontal overflow.
+The turn band remains the single authored poster-rise moment with an
+exponential ease-out. Enemy aim uses a restrained pulse and a 700ms incoming
+beat followed by a 500ms impact hold. Reduced-motion users lose the pulse but
+keep the same paced state changes. At narrow widths the boards stack, labels
+remain inside each board frame, and the action controls wrap without
+horizontal overflow.

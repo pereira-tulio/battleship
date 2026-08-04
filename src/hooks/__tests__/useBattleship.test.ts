@@ -96,16 +96,33 @@ describe('battleship reducer', () => {
     ).toBe(state);
   });
 
-  it('ignores AI fire outside aiTurn', () => {
+  it('ignores AI fire outside the aiming phase', () => {
     const state = createInitialState();
     expect(battleshipReducer(state, { type: 'ai-fire' })).toBe(state);
   });
 
-  it('starts an AI turn after a valid player shot', () => {
+  it('starts an AI aiming phase after a valid player shot', () => {
     const state = { ...deployed(), phase: 'playerTurn' as const };
-    expect(
-      battleshipReducer(state, { type: 'fire', coordinate: { row: 0, col: 0 } }).phase,
-    ).toBe('aiTurn');
+    const next = battleshipReducer(state, {
+      type: 'fire',
+      coordinate: { row: 0, col: 0 },
+    });
+    expect(next.phase).toBe('aiAiming');
+    expect(next.aiTarget).not.toBeNull();
+  });
+
+  it('resolves the aimed AI shot into the impact phase', () => {
+    const state = {
+      ...deployed(),
+      phase: 'aiAiming' as const,
+      aiTarget: { row: 0, col: 0 },
+    };
+    expect(battleshipReducer(state, { type: 'ai-fire' }).phase).toBe('aiTurn');
+  });
+
+  it('returns to the player after the AI impact phase', () => {
+    const state = { ...deployed(), phase: 'aiTurn' as const };
+    expect(battleshipReducer(state, { type: 'ai-complete' }).phase).toBe('playerTurn');
   });
 
   it('resets the complete game state with New Game', () => {
@@ -119,6 +136,7 @@ describe('battleship reducer', () => {
     expect(next.player.ships).toHaveLength(0);
     expect(next.enemy.ships).toHaveLength(5);
     expect(next.winner).toBeNull();
+    expect(next.aiTarget).toBeNull();
   });
 
   it('produces deterministic initial states for a fixed seed', () => {
@@ -132,10 +150,15 @@ describe('battleship reducer', () => {
   it('keeps an AI reducer result deterministic for a fixed state', () => {
     const state: GameState = {
       ...deployed(80),
-      phase: 'aiTurn',
+      phase: 'playerTurn',
     };
-    expect(battleshipReducer(state, { type: 'ai-fire' })).toEqual(
-      battleshipReducer(state, { type: 'ai-fire' }),
+    const aiming = battleshipReducer(state, {
+      type: 'fire',
+      coordinate: { row: 0, col: 0 },
+    });
+    expect(aiming.phase).toBe('aiAiming');
+    expect(battleshipReducer(aiming, { type: 'ai-fire' })).toEqual(
+      battleshipReducer(aiming, { type: 'ai-fire' }),
     );
   });
 });
