@@ -1,10 +1,12 @@
-# Fleetline Battleship
+# Battleship
 
-![Fleetline Battleship desktop screenshot](docs/screenshots/desktop.png)
+**Play it: https://battleship-eta-five.vercel.app**
 
-Fleetline is a polished, accessible Battleship single-page application built with
-React, TypeScript, Vite, and plain CSS. It runs entirely in the browser: no
-backend, authentication, database, API key, or external service is required.
+![Battleship desktop screenshot](docs/screenshots/desktop.png)
+
+A polished, accessible Battleship single-page application built with React,
+TypeScript, Vite, and plain CSS. It runs entirely in the browser: no backend,
+authentication, database, API key, or external service is required.
 
 ## Features
 
