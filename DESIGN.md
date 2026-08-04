@@ -25,9 +25,10 @@ active call to action and combat states.
   repeating as a dinghy stamp in every occupied cell.
 - The attack mark is an authored crosshair-and-projectile SVG used in the fire
   invitation, incoming AI beat, and board legend.
-- Fired states stay value-separated on petrol water: bone miss, hot orange hit,
-  and dead ink sunk. The legend mirrors the exact authored marks, and fleet
-  chips use a deliberate two-column/two-row rhythm at narrow rails.
+- Fired states stay value-separated on petrol water: a quiet flattened-water
+  miss, hot orange hit, and dead ink sunk. The legend mirrors the exact
+  authored marks, and fleet chips use a compact three-column/two-row rhythm at
+  narrow rails.
 - Placement uses a compact side rail for fleet controls, legend, and the start
   action so the board pair owns the first desktop viewport.
 - Fleet entries use poster-like ruled rows and strike-through for sunk ships.
