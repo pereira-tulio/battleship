@@ -34,7 +34,7 @@ active call to action and combat states.
 - A newly sunk vessel fractures into two authored flat-profile halves over
   roughly 620ms: a hard 10px central gap opens, the bow and stern list apart
   by opposing 4° tilts, and the full-opacity halves remain at full scale as a
-  readable wreck. The wreck profile uses a reduced 52% cross-axis height so
+  readable wreck. The wreck profile uses a reduced 40% cross-axis height so
   the rotated silhouette stays inside its cell run. Reduced motion skips
   directly to that broken resting state.
 - Fired states stay value-separated on petrol water: a quiet flattened-water

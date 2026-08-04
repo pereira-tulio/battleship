@@ -576,7 +576,7 @@ kbd {
 }
 
 .cell-vessel-wreck {
-  height: 52%;
+  height: 40%;
 }
 
 .cell-vessel-half .ship-icon {
@@ -586,13 +586,13 @@ kbd {
 }
 
 .cell-vessel-half-a {
-  clip-path: inset(0 50% 0 0);
+  clip-path: inset(0 53% 0 0);
   transform-origin: right center;
   animation: wreck-half-a 620ms ease-out forwards;
 }
 
 .cell-vessel-half-b {
-  clip-path: inset(0 0 0 50%);
+  clip-path: inset(0 0 0 53%);
   transform-origin: left center;
   animation: wreck-half-b 620ms ease-out forwards;
 }
@@ -611,7 +611,7 @@ kbd {
   }
   to {
     opacity: 1;
-    transform: translate(-5px, 0) rotate(-4deg);
+    transform: rotate(-4deg);
   }
 }
 
@@ -622,7 +622,7 @@ kbd {
   }
   to {
     opacity: 1;
-    transform: translate(5px, 0) rotate(4deg);
+    transform: rotate(4deg);
   }
 }
 
@@ -834,13 +834,13 @@ kbd {
   .cell-vessel-half-a {
     animation: none;
     opacity: 1;
-    transform: translate(-5px, 0) rotate(-4deg);
+    transform: rotate(-4deg);
   }
 
   .cell-vessel-half-b {
     animation: none;
     opacity: 1;
-    transform: translate(5px, 0) rotate(4deg);
+    transform: rotate(4deg);
   }
 
   *,
