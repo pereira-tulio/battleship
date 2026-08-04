@@ -32,10 +32,11 @@ active call to action and combat states.
 - Sunk hulls use the full class silhouette without repeating boxed-saltire
   marks; the legend uses a compact vessel silhouette for that reveal grammar.
 - A newly sunk vessel fractures into two authored flat-profile halves over
-  roughly 620ms: a hard 10px central gap opens, the bow and stern list apart
-  by opposing 4° tilts, and the full-opacity halves remain at full scale as a
-  readable wreck. The wreck profile uses a reduced 40% cross-axis height so
-  the rotated silhouette stays inside its cell run. Reduced motion skips
+  roughly 620ms: a hard 10px central gap opens, the halves separate with
+  opposing 3px horizontal and 2px vertical translations, and the
+  full-opacity halves remain at full scale as a readable wreck. The wreck
+  profile uses a 66% cross-axis height plus a 6px trailing clip so the
+  translated silhouette stays inside its cell run. Reduced motion skips
   directly to that broken resting state.
 - Fired states stay value-separated on petrol water: a quiet flattened-water
   miss, hot orange hit, and dead ink sunk. The legend mirrors the exact
