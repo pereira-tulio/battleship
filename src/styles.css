@@ -603,22 +603,22 @@ kbd {
 @keyframes wreck-half-a {
   from {
     opacity: 1;
-    transform: translate(0, 0) rotate(0deg);
+    transform: translate(0, 0) rotate(0deg) scale(1);
   }
   to {
     opacity: 0.72;
-    transform: translate(-9px, 6px) rotate(-11deg);
+    transform: translate(-5px, 0) rotate(-2deg) scale(0.9);
   }
 }
 
 @keyframes wreck-half-b {
   from {
     opacity: 1;
-    transform: translate(0, 0) rotate(0deg);
+    transform: translate(0, 0) rotate(0deg) scale(1);
   }
   to {
     opacity: 0.72;
-    transform: translate(9px, 5px) rotate(11deg);
+    transform: translate(5px, 0) rotate(2deg) scale(0.9);
   }
 }
 
@@ -830,13 +830,13 @@ kbd {
   .cell-vessel-half-a {
     animation: none;
     opacity: 0.72;
-    transform: translate(-9px, 6px) rotate(-11deg);
+    transform: translate(-5px, 0) rotate(-2deg) scale(0.9);
   }
 
   .cell-vessel-half-b {
     animation: none;
     opacity: 0.72;
-    transform: translate(9px, 5px) rotate(11deg);
+    transform: translate(5px, 0) rotate(2deg) scale(0.9);
   }
 
   *,
