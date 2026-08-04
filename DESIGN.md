@@ -20,8 +20,14 @@ active call to action and combat states.
 - Fleet classes use authored inline SVG silhouettes in the fleet rail, ship
   selector, and deployed hull cells. Carrier, battleship, cruiser, submarine,
   and destroyer each have a distinct compact profile.
+- Deployed hulls are solid ink vessels with a restrained foam keel treatment;
+  the class silhouette appears in the fleet rail and selector rather than
+  repeating as a dinghy stamp in every occupied cell.
 - The attack mark is an authored crosshair-and-projectile SVG used in the fire
   invitation, incoming AI beat, and board legend.
+- Fired states stay value-separated on petrol water: bone miss, hot orange hit,
+  and dead ink sunk. The legend mirrors the exact authored marks, and fleet
+  chips use a deliberate two-column/two-row rhythm at narrow rails.
 - Placement uses a compact side rail for fleet controls, legend, and the start
   action so the board pair owns the first desktop viewport.
 - Fleet entries use poster-like ruled rows and strike-through for sunk ships.

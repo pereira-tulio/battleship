@@ -310,9 +310,9 @@ kbd {
 }
 
 .fleet-list {
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 7px;
-  flex-wrap: wrap;
   margin-top: 7px;
 }
 
@@ -328,6 +328,7 @@ kbd {
   color: var(--black);
   font-size: 13px;
   font-weight: 600;
+  min-width: 0;
 }
 
 .fleet-list > button {
@@ -552,6 +553,7 @@ kbd {
   background: var(--black);
   background-image: none;
   color: var(--yellow);
+  box-shadow: inset 0 -5px 0 rgba(197, 229, 223, 0.28);
 }
 
 .cell-hit {
@@ -589,7 +591,11 @@ kbd {
 }
 
 .cell-preview-valid {
-  box-shadow: inset 0 0 0 4px var(--orange);
+  background: var(--black);
+  color: var(--yellow);
+  box-shadow:
+    inset 0 0 0 3px var(--orange),
+    inset 0 -5px 0 rgba(197, 229, 223, 0.28);
 }
 
 .cell-preview-invalid {
@@ -601,11 +607,11 @@ kbd {
 .legend {
   display: flex;
   justify-content: center;
-  gap: 16px;
+  gap: 8px;
   flex-wrap: wrap;
   margin: 20px 0 0;
   color: var(--paper);
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 600;
 }
 
@@ -615,9 +621,9 @@ kbd {
 
 .legend-swatch {
   display: inline-grid;
-  width: 25px;
-  height: 25px;
-  margin-right: 5px;
+  width: 20px;
+  height: 20px;
+  margin-right: 3px;
   place-items: center;
   border: 2px solid var(--black);
   font-style: normal;
@@ -632,10 +638,12 @@ kbd {
 .legend-miss {
   border-style: solid;
   background: var(--paper);
+  color: var(--black);
 }
 
 .legend-hit {
   background: var(--orange);
+  color: var(--black);
 }
 
 .legend-sunk {
