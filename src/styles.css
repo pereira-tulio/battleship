@@ -347,8 +347,7 @@ kbd {
 
 .fleet-list .fleet-selected {
   border-color: var(--orange);
-  outline: 3px solid var(--black);
-  outline-offset: 2px;
+  box-shadow: inset 0 0 0 1px var(--black);
 }
 
 .fleet-list b {
@@ -775,13 +774,22 @@ kbd {
   }
 
   .topbar {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: end;
     min-height: 72px;
     margin: 0 -13px;
     padding: 10px 13px 7px;
   }
 
   .topbar h1 {
+    grid-column: 1 / -1;
+    width: 100%;
     font-size: clamp(58px, 17vw, 88px);
+  }
+
+  .topbar-actions {
+    grid-column: 2;
   }
 
   .topbar .button {
