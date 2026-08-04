@@ -76,7 +76,7 @@ export function Cell({
           }}
           aria-hidden="true"
         >
-          <ShipIcon name={vessel.name} />
+          <ShipIcon name={vessel.name} profile />
         </span>
       )}
     </button>

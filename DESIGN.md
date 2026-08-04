@@ -25,9 +25,10 @@ active call to action and combat states.
   repeating as a dinghy stamp in every occupied cell.
 - The attack mark is an authored crosshair-and-projectile SVG used in the fire
   invitation, incoming AI beat, and board legend.
-- Ship silhouettes span each own-board hull once, oriented with the vessel and
-  scaled to its footprint; enemy class silhouettes remain hidden until that
-  vessel is sunk, when the same class identity is revealed.
+- Ship silhouettes span each own-board hull once, using elongated class-specific
+  profiles oriented with the vessel and scaled to its footprint; enemy class
+  silhouettes remain hidden until that vessel is sunk, when the same class
+  identity is revealed.
 - Sunk hulls use the full class silhouette without repeating boxed-saltire
   marks; the legend uses a compact vessel silhouette for that reveal grammar.
 - Fired states stay value-separated on petrol water: a quiet flattened-water
