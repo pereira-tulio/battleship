@@ -394,6 +394,26 @@ kbd {
   margin: 0;
 }
 
+.placement-content .fleet-status {
+  height: 132px;
+}
+
+.placement-content .fleet-list {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.placement-content .fleet-list > span,
+.placement-content .fleet-list > button {
+  gap: 2px;
+  padding: 3px 2px;
+  font-size: 10px;
+}
+
+.placement-content .fleet-list .ship-icon {
+  width: 22px;
+  height: 12px;
+}
+
 .placement-content .control-actions {
   justify-content: stretch;
   margin-top: 12px;
