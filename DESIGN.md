@@ -31,6 +31,9 @@ active call to action and combat states.
   identity is revealed.
 - Sunk hulls use the full class silhouette without repeating boxed-saltire
   marks; the legend uses a compact vessel silhouette for that reveal grammar.
+- A newly sunk vessel fractures into two authored flat-profile halves over
+  roughly 620ms, then remains split and tilted as a readable wreck. Reduced
+  motion skips directly to the broken resting state.
 - Fired states stay value-separated on petrol water: a quiet flattened-water
   miss, hot orange hit, and dead ink sunk. The legend mirrors the exact
   authored marks, and fleet chips use a compact three-column/two-row rhythm at

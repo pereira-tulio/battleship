@@ -68,7 +68,9 @@ export function Cell({
       )}
       {vessel && (
         <span
-          className={`cell-vessel cell-vessel-${vessel.orientation}`}
+          className={`cell-vessel cell-vessel-${vessel.orientation} ${
+            status === 'sunk' ? 'cell-vessel-wreck' : ''
+          }`}
           style={{
             width: `calc(${vessel.size * 100}% + ${
               (vessel.size - 1) * 3 + vessel.size * 4
@@ -76,7 +78,18 @@ export function Cell({
           }}
           aria-hidden="true"
         >
-          <ShipIcon name={vessel.name} profile />
+          {status === 'sunk' ? (
+            <>
+              <span className="cell-vessel-half cell-vessel-half-a">
+                <ShipIcon name={vessel.name} profile />
+              </span>
+              <span className="cell-vessel-half cell-vessel-half-b">
+                <ShipIcon name={vessel.name} profile />
+              </span>
+            </>
+          ) : (
+            <ShipIcon name={vessel.name} profile />
+          )}
         </span>
       )}
     </button>
