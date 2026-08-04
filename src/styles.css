@@ -1,15 +1,17 @@
 :root {
   font-family: 'Barlow Condensed', Arial, sans-serif;
-  color: #090909;
-  background: #f2c230;
+  color: #f5f0df;
+  background: #082f3d;
   font-synthesis: none;
-  --black: #090909;
-  --paper: #f7f3e8;
-  --yellow: #f2c230;
+  --black: #061820;
+  --paper: #f5f0df;
+  --yellow: #c5e5df;
   --orange: #ed4b24;
   --orange-dark: #7d2417;
-  --gray: #d8d2c4;
-  --muted: #4a4439;
+  --gray: #c5d2ce;
+  --muted: #24444b;
+  --ocean: #082f3d;
+  --water: #176078;
 }
 
 * {
@@ -20,7 +22,7 @@ body {
   min-width: 320px;
   margin: 0;
   overflow-x: hidden;
-  background: var(--yellow);
+  background: var(--ocean);
 }
 
 button {
@@ -59,6 +61,7 @@ button:focus-visible,
   overflow: hidden;
   border-bottom: 8px solid var(--black);
   background: var(--paper);
+  color: var(--black);
   position: relative;
 }
 
@@ -137,6 +140,7 @@ h4,
   overflow: hidden;
   border: 5px solid var(--black);
   background: var(--orange);
+  color: var(--black);
   position: relative;
 }
 
@@ -182,6 +186,7 @@ h4,
 
 .status-gameOver {
   background: var(--black);
+  color: var(--paper);
 }
 
 .controls {
@@ -191,6 +196,7 @@ h4,
   padding: 10px 14px;
   border: 4px solid var(--black);
   background: var(--paper);
+  color: var(--black);
 }
 
 .control-heading {
@@ -201,6 +207,41 @@ h4,
   letter-spacing: -0.025em;
   line-height: 0.9;
   text-transform: uppercase;
+}
+
+.ship-icon {
+  width: 28px;
+  height: 15px;
+  flex: 0 0 auto;
+  fill: currentColor;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: round;
+  stroke-width: 1.35;
+}
+
+.cell .ship-icon {
+  width: 76%;
+  height: 76%;
+}
+
+.attack-icon {
+  width: 18px;
+  height: 18px;
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: square;
+  stroke-linejoin: miter;
+  stroke-width: 1.8;
+  vertical-align: -4px;
+}
+
+.hero h2 .attack-icon {
+  width: 0.62em;
+  height: 0.62em;
+  margin-right: 0.14em;
+  stroke-width: 2;
+  vertical-align: 0.04em;
 }
 
 .control-copy {
@@ -382,6 +423,7 @@ kbd {
   padding: 10px;
   border: 5px solid var(--black);
   background: var(--paper);
+  color: var(--black);
 }
 
 .board-panel:first-child {
@@ -453,10 +495,21 @@ kbd {
 }
 
 .cell {
+  display: grid;
+  place-items: center;
   aspect-ratio: 1;
   min-width: 0;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
   border: 2px solid var(--black);
-  background: var(--yellow);
+  background-color: var(--water);
+  background-image: repeating-linear-gradient(
+    165deg,
+    transparent 0 7px,
+    rgba(197, 229, 223, 0.12) 8px 9px,
+    transparent 10px 15px
+  );
   color: var(--black);
   cursor: pointer;
   font-family: 'Big Shoulders Display', Impact, sans-serif;
@@ -488,6 +541,7 @@ kbd {
 
 .cell-aiming {
   background: var(--orange);
+  background-image: none;
   color: var(--black);
   box-shadow: inset 0 0 0 4px var(--black);
   animation: aim-pulse 700ms ease-in-out infinite;
@@ -496,17 +550,20 @@ kbd {
 .cell-ship {
   border-color: var(--black);
   background: var(--black);
+  background-image: none;
   color: var(--yellow);
 }
 
 .cell-hit {
   background: var(--orange);
+  background-image: none;
   color: var(--black);
   box-shadow: inset 0 0 0 3px var(--black);
 }
 
 .cell-sunk {
   background: var(--black);
+  background-image: none;
   color: var(--yellow);
   box-shadow: inset 0 0 0 3px var(--yellow);
 }
@@ -514,6 +571,7 @@ kbd {
 .cell-miss {
   border-style: solid;
   background: var(--paper);
+  background-image: none;
   color: var(--black);
   box-shadow: inset 0 0 0 3px var(--black);
 }
@@ -546,7 +604,7 @@ kbd {
   gap: 16px;
   flex-wrap: wrap;
   margin: 20px 0 0;
-  color: var(--black);
+  color: var(--paper);
   font-size: 15px;
   font-weight: 600;
 }
@@ -584,6 +642,11 @@ kbd {
   background: var(--black);
   color: var(--yellow);
   transform: rotate(3deg);
+}
+
+.legend-attack {
+  background: var(--orange);
+  color: var(--black);
 }
 
 .helper {

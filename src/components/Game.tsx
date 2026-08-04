@@ -9,6 +9,7 @@ import { GameHeader } from './GameHeader';
 import { PlacementPanel } from './PlacementPanel';
 import { StatusBanner } from './StatusBanner';
 import { CellMark } from './CellMark';
+import { AttackIcon } from './AttackIcon';
 import '../styles.css';
 
 function Legend() {
@@ -31,6 +32,12 @@ function Legend() {
           <CellMark status="sunk" />
         </i>{' '}
         Sunk
+      </span>
+      <span>
+        <i className="legend-swatch legend-attack">
+          <AttackIcon />
+        </i>{' '}
+        Attack
       </span>
     </div>
   );

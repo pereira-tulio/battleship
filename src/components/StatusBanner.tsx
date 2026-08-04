@@ -1,4 +1,5 @@
 import type { Phase } from '../hooks/useBattleship';
+import { AttackIcon } from './AttackIcon';
 
 type StatusBannerProps = {
   phase: Phase;
@@ -23,7 +24,10 @@ export function StatusBanner({ phase, message, onNewGame }: StatusBannerProps) {
   return (
     <section className="hero">
       <div>
-        <h2>{title}</h2>
+        <h2>
+          {phase === 'aiAiming' && <AttackIcon />}
+          {title}
+        </h2>
       </div>
       <div className="status" aria-live="polite">
         <span className={`status-dot status-${phase}`} />

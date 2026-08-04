@@ -1,5 +1,6 @@
 import { FLEET } from '../game/fleet';
 import type { Board } from '../game/types';
+import { ShipIcon } from './ShipIcon';
 
 type FleetStatusProps = {
   board: Board;
@@ -26,6 +27,7 @@ export function FleetStatus({
           const sunk = Boolean(ship && ship.hits.length >= ship.size);
           const content = (
             <>
+              <ShipIcon name={spec.name} />
               <span>{spec.name}</span>
               <b>{spec.size}</b>
               {sunk && <em aria-label="sunk">Sunk</em>}

@@ -1,6 +1,7 @@
 import type { Board } from '../game/types';
 import type { Phase } from '../hooks/useBattleship';
 import { Board as GameBoard } from './Board';
+import { AttackIcon } from './AttackIcon';
 import { FleetStatus } from './FleetStatus';
 
 type BoardPanelProps = {
@@ -57,13 +58,19 @@ export function BoardPanel({
       />
       <FleetStatus board={board} label={enemy ? 'Enemy fleet' : 'Your fleet'} />
       <p className="helper">
-        {enemy
-          ? interactive
-            ? 'Select a coordinate to fire.'
-            : 'Waters are locked.'
-          : phase === 'placement'
-            ? 'Select a coordinate to place your ship.'
-            : 'Fleet deployed.'}
+        {enemy ? (
+          interactive ? (
+            <>
+              <AttackIcon /> Select a coordinate to fire.
+            </>
+          ) : (
+            'Waters are locked.'
+          )
+        ) : phase === 'placement' ? (
+          'Select a coordinate to place your ship.'
+        ) : (
+          'Fleet deployed.'
+        )}
       </p>
     </div>
   );

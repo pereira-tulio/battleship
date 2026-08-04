@@ -3,17 +3,25 @@
 ## Chosen world
 
 The interface uses the challenger direction B: a Paula Scher street-poster
-grammar. Taxi yellow and paper white establish the field; black condensed
+grammar. Deep ocean navy and bone paper establish the field; black condensed
 display type creates architectural scale; red-orange is reserved for the
-active call to action.
+active call to action and combat states.
 
 ## Interface rules
 
 - The current turn is the loudest visual statement.
 - Boards remain the product: square cells, coordinate labels, and a clean
   two-board reading order are never obscured by typography.
+- Unexplored water uses a restrained repeating swell pattern and a lighter
+  petrol tone, so the grids read as nautical charts rather than checkerboards.
+  Rules remain hard enough for targeting while the water has its own rhythm.
 - Hit, miss, sunk, and placement states differ by color, border treatment, and
   symbol.
+- Fleet classes use authored inline SVG silhouettes in the fleet rail, ship
+  selector, and deployed hull cells. Carrier, battleship, cruiser, submarine,
+  and destroyer each have a distinct compact profile.
+- The attack mark is an authored crosshair-and-projectile SVG used in the fire
+  invitation, incoming AI beat, and board legend.
 - Placement uses a compact side rail for fleet controls, legend, and the start
   action so the board pair owns the first desktop viewport.
 - Fleet entries use poster-like ruled rows and strike-through for sunk ships.
@@ -40,4 +48,5 @@ exponential ease-out. Enemy aim uses a restrained pulse and a 700ms incoming
 beat followed by a 500ms impact hold. Reduced-motion users lose the pulse but
 keep the same paced state changes. At narrow widths the boards stack, labels
 remain inside each board frame, and the action controls wrap without
-horizontal overflow.
+horizontal overflow. The sea palette preserves high contrast: bone text on
+ocean/petrol, ink on paper, and darkened orange ink for small accent copy.

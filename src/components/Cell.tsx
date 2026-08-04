@@ -1,6 +1,7 @@
 import type { KeyboardEvent } from 'react';
-import type { CellMark, Coordinate } from '../game/types';
+import type { CellMark, Coordinate, ShipName } from '../game/types';
 import { CellMark as CellMarkIcon } from './CellMark';
+import { ShipIcon } from './ShipIcon';
 
 type CellProps = {
   coordinate: Coordinate;
@@ -11,6 +12,7 @@ type CellProps = {
   previewValid: boolean;
   latest: boolean;
   aiming: boolean;
+  shipName?: ShipName;
   onCell?: (cell: Coordinate) => void;
   onHover?: (cell: Coordinate) => void;
   onKeyDown: (event: KeyboardEvent<HTMLButtonElement>, cell: Coordinate) => void;
@@ -25,6 +27,7 @@ export function Cell({
   previewValid,
   latest,
   aiming,
+  shipName,
   onCell,
   onHover,
   onKeyDown,
@@ -50,6 +53,8 @@ export function Cell({
     >
       {aiming ? (
         <CellMarkIcon status="aim" />
+      ) : status === 'ship' && shipName ? (
+        <ShipIcon name={shipName} />
       ) : (
         status !== 'unknown' && status !== 'ship' && <CellMarkIcon status={status} />
       )}

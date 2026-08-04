@@ -101,6 +101,7 @@ export function Board({
                     previewValid={previewValid}
                     latest={latestShot ? keyOf(latestShot) === key : false}
                     aiming={aimingShot ? keyOf(aimingShot) === key : false}
+                    shipName={ship && !enemy ? ship.name : undefined}
                     onHover={onHover}
                     onCell={onCell}
                     onKeyDown={handleGridKeyDown}
