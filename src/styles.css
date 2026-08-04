@@ -366,6 +366,10 @@ kbd {
   text-decoration-thickness: 3px;
 }
 
+.fleet-sunk .ship-icon {
+  color: var(--orange);
+}
+
 .boards {
   align-items: stretch;
   gap: 18px;
@@ -578,6 +582,7 @@ kbd {
 .cell-vessel-wreck {
   height: 66%;
   clip-path: inset(0 6px 0 0);
+  color: var(--foam);
 }
 
 .cell-vessel-half .ship-icon {
@@ -607,18 +612,22 @@ kbd {
 
 @keyframes wreck-half-a {
   from {
+    color: var(--foam);
     transform: translate(0, 0);
   }
   to {
+    color: var(--orange);
     transform: translate(-3px, 2px);
   }
 }
 
 @keyframes wreck-half-b {
   from {
+    color: var(--foam);
     transform: translate(0, 0);
   }
   to {
+    color: var(--orange);
     transform: translate(3px, -2px);
   }
 }
@@ -756,7 +765,7 @@ kbd {
 
 .legend-sunk {
   background: var(--black);
-  color: var(--foam);
+  color: var(--orange);
   transform: rotate(3deg);
 }
 
@@ -850,6 +859,10 @@ kbd {
   .cell-vessel-half-b {
     animation: none !important;
     animation-duration: 0s !important;
+  }
+
+  .cell-vessel-wreck {
+    color: var(--orange);
   }
 
   .cell-aiming {
