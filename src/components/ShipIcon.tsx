@@ -24,24 +24,24 @@ export function ShipIcon({ name, className = '', profile = false }: ShipIconProp
     >
       {profile && name === 'Carrier' && (
         <>
-          <path d="M10 13h160l-16 5H26z" />
-          <path d="M28 10h118l12 3H18z" />
+          <path d="M10 11h160l-16 8H26z" />
+          <path d="M28 8h118l12 3H18z" />
           <path d="M68 6h42v4H68zM76 3h26v3H76z" />
           <path d="M12 18h156" />
         </>
       )}
       {profile && name === 'Battleship' && (
         <>
-          <path d="M8 13h129l-16 5H24z" />
-          <path d="M30 9h78v4H30z" />
+          <path d="M8 11h129l-16 8H24z" />
+          <path d="M30 8h78v3H30z" />
           <path d="M42 4h18v5H42zM82 3h18v6H82z" />
           <path d="M40 3h22M80 2h24" />
         </>
       )}
       {profile && name === 'Cruiser' && (
         <>
-          <path d="M8 13h94l-16 5H24z" />
-          <path d="M31 8h46v5H31z" />
+          <path d="M8 11h94l-16 8H24z" />
+          <path d="M31 7h46v4H31z" />
           <path d="M44 3h20v5H44zM72 5h18v3H72z" />
         </>
       )}
@@ -54,8 +54,8 @@ export function ShipIcon({ name, className = '', profile = false }: ShipIconProp
       )}
       {profile && name === 'Destroyer' && (
         <>
-          <path d="M5 13h60l-10 5H15z" />
-          <path d="M23 8h23v5H23zM32 4h11v4H32z" />
+          <path d="M5 11h60l-10 8H15z" />
+          <path d="M23 7h23v4H23zM32 3h11v4H32z" />
           <path d="M7 18h56" />
         </>
       )}
